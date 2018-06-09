@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">FindNearByPlaces</string>
+    <string name="looking_for">What are you looking for</string>
+    <string name="search">Search</string>
+    <string name="searched_list">You recently searched for:</string>
 </resources>
