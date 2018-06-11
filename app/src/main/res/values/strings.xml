@@ -3,4 +3,10 @@
     <string name="looking_for">What are you looking for</string>
     <string name="search">Search</string>
     <string name="searched_list">You recently searched for:</string>
+    <string name="place_finder">Place Finder</string>
+    <string name="mandatory_permission_message">These permissions are mandatory for the application. Please allow access</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="edittext_validation_error_message">Please enter a keyword to search</string>
+    <string name="near_you_label">Near you</string>
 </resources>
