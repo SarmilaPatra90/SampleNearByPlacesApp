@@ -9,10 +9,11 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.findnearbyplaces.util.Constant;
@@ -34,7 +35,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import sms.sarmila.ele.com.findnearbyplaces.R;
 
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
@@ -47,21 +48,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     LocationRequest mLocationRequest;
     private String enteredText;
     private double latitude, longitude;
-    private TextView tv_searchedText;
+    private Toolbar map_toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nearbyplaces_map);
-        tv_searchedText = (TextView) findViewById(R.id.tv_searchedText);
-        enteredText = getIntent().getStringExtra(Constant.ENTERED_TEXT);
-        latitude = getIntent().getDoubleExtra(Constant.LATITUDE, 0);
-        longitude = getIntent().getDoubleExtra(Constant.LONGITUDE, 0);
-        tv_searchedText.setText(enteredText + " " +  getString(R.string.near_you_label));
+        initViews();
+        getExtraData();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }
-
         //Check if Google Play Services Available or not
         if (!CheckGooglePlayServices()) {
             Log.d("onCreate", "Finishing test case since Google Play Services are not available");
@@ -72,6 +69,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+    }
+
+    private void getExtraData() {
+        enteredText = getIntent().getStringExtra(Constant.ENTERED_TEXT);
+        latitude = getIntent().getDoubleExtra(Constant.LATITUDE, 0);
+        longitude = getIntent().getDoubleExtra(Constant.LONGITUDE, 0);
+        map_toolbar.setTitle(enteredText + " " + getString(R.string.near_you_label));
+    }
+
+    private void initViews() {
+        map_toolbar = (Toolbar) findViewById(R.id.map_toolbar);
+        setSupportActionBar(map_toolbar);
     }
 
     private boolean CheckGooglePlayServices() {
@@ -247,5 +256,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
         }
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(final Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_showList:
+                Toast.makeText(this , "Tool bar icon clicked" , Toast.LENGTH_LONG).show();
+                break;
+            default:
+                break;
+        }
+        return true;
     }
 }

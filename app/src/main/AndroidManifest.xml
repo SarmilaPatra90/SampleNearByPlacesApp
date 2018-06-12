@@ -35,7 +35,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.findnearbyplaces.nearbyplacesmap.MapsActivity"></activity>
+        <activity android:name="com.findnearbyplaces.nearbyplacesmap.MapsActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
     </application>
 
