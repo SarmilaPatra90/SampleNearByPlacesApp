@@ -133,9 +133,22 @@ public class PlaceFinderActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void insertNameToDB(String name) {
-        long id = db.insertSearchedName(name);
-        searchedListAdapter.notifyDataSetChanged();
-        Toast.makeText(this, "Inserted !!!!!!!!!!" + db.getSearchedNameById(id).getSearchName(), Toast.LENGTH_LONG).show();
+        List<String> userSearchedDetailList = db.getSearchedListFromDB();
+        if (userSearchedDetailList.isEmpty()) {
+            long id = db.insertSearchedName(name);
+            searchedListAdapter.notifyDataSetChanged();
+            Toast.makeText(this, "Inserted !!!!!!!!!!" + db.getSearchedNameById(id).getSearchName(), Toast.LENGTH_LONG).show();
+
+        } else {
+            for (String searchName : userSearchedDetailList) {
+                if (!(searchName.trim().toLowerCase().equalsIgnoreCase(name.trim().toLowerCase()))) {
+                    long id = db.insertSearchedName(name);
+                    searchedListAdapter.notifyDataSetChanged();
+                    Toast.makeText(this, "Inserted !!!!!!!!!!" + db.getSearchedNameById(id).getSearchName(), Toast.LENGTH_LONG).show();
+
+                }
+            }
+        }
 
     }
 

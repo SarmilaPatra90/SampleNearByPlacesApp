@@ -37,6 +37,7 @@
         </activity>
         <activity android:name="com.findnearbyplaces.nearbyplacesmap.MapsActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name="com.findnearbyplaces.shownearbyplaceslist.ShowNearByPlacesActivity" />
 
     </application>
 

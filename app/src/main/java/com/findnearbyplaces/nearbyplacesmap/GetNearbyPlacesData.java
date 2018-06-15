@@ -3,6 +3,7 @@ package com.findnearbyplaces.nearbyplacesmap;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.findnearbyplaces.model.NearByPlaces;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -39,11 +40,11 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
         List<HashMap<String, String>> nearbyPlacesList = null;
         DataParser dataParser = new DataParser();
         nearbyPlacesList =  dataParser.parse(result);
-        ShowNearbyPlaces(nearbyPlacesList);
+        showNearbyPlaces(nearbyPlacesList);
         Log.d("GooglePlacesReadTask", "onPostExecute Exit");
     }
 
-    private void ShowNearbyPlaces(List<HashMap<String, String>> nearbyPlacesList) {
+    public void showNearbyPlaces(List<HashMap<String, String>> nearbyPlacesList) {
         for (int i = 0; i < nearbyPlacesList.size(); i++) {
             Log.d("onPostExecute","Entered into showing locations");
             MarkerOptions markerOptions = new MarkerOptions();
@@ -53,6 +54,12 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
             String placeName = googlePlace.get("place_name");
             String vicinity = googlePlace.get("vicinity");
             LatLng latLng = new LatLng(lat, lng);
+            NearByPlaces nearByPlaces = new NearByPlaces();
+            nearByPlaces.setName(placeName);
+            nearByPlaces.setAddress(vicinity);
+            nearByPlaces.setCurrentlyOpen(true);
+            nearByPlaces.setRating(1);
+            nearByPlaces.setFavourite(true);
             markerOptions.position(latLng);
             markerOptions.title(placeName + " : " + vicinity);
             mMap.addMarker(markerOptions);

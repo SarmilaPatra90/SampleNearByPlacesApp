@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.findnearbyplaces.model.NearByPlaces;
 import com.findnearbyplaces.model.UserSearchedDetail;
 
 import java.util.ArrayList;
@@ -46,6 +47,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
 
         return id;
+    }
+    public List<String> getSearchedListFromDB() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        List<String> searchNameList = new ArrayList<>();
+        Cursor cursor = db.rawQuery("SELECT " + UserSearchedDetail.COLUMN_NAME + " FROM " +  UserSearchedDetail.TABLE_NAME , null );
+        while (cursor.moveToFirst()){
+            searchNameList.add(cursor.getString(0));
+        }
+        cursor.close();
+
+        db.close();
+
+        return searchNameList ;
     }
 
     public UserSearchedDetail getSearchedNameById(long id) {

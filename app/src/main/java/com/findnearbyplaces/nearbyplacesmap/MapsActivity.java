@@ -2,6 +2,7 @@ package com.findnearbyplaces.nearbyplacesmap;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
@@ -16,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.findnearbyplaces.shownearbyplaceslist.ShowNearByPlacesActivity;
 import com.findnearbyplaces.util.Constant;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -149,7 +151,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    private String getUrl(double latitude, double longitude, String nearbyPlace) {
+    public String getUrl(double latitude, double longitude, String nearbyPlace) {
 
         StringBuilder googlePlacesUrl = new StringBuilder(Constant.URL);
         googlePlacesUrl.append(Constant.LOCATION + "=" + latitude + "," + longitude);
@@ -270,6 +272,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         switch (item.getItemId()) {
             case R.id.menu_showList:
                 Toast.makeText(this , "Tool bar icon clicked" , Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(MapsActivity.this , ShowNearByPlacesActivity.class);
+                intent.putExtra(Constant.ENTERED_TEXT, enteredText);
+                intent.putExtra(Constant.LATITUDE, latitude);
+                intent.putExtra(Constant.LONGITUDE, longitude);
+                startActivity(intent);
                 break;
             default:
                 break;
